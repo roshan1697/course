@@ -7,7 +7,7 @@ import authJwt from "../middleware/jsonwt.js"
 const router = express.Router()
 
 router.get('/me',authJwt ,async(req,res)=>{
-    const admin = await Admin.findOne({username:req.user.username})
+    const admin = await Admin.findOne({username:req.headers['user']})
         
         if(admin){
 

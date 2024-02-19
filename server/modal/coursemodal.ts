@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const courseSchema = mongoose.Schema(
+const courseSchema = new mongoose.Schema(
     {
         title:String,
         description:String,
@@ -10,7 +10,7 @@ const courseSchema = mongoose.Schema(
     }
 )
 
-const adminSchema = mongoose.Schema(
+const adminSchema = new mongoose.Schema(
 
     {
         
@@ -21,7 +21,7 @@ const adminSchema = mongoose.Schema(
     }
 )
 
-const userSchema = mongoose.Schema(
+const userSchema = new mongoose.Schema(
     {
         
         username:String,

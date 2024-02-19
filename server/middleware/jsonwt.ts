@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken'
 import { SECRET } from '../config.js'
+import { NextFunction, Request, Response } from 'express'
 
-const authJwt = (req,res,next) => {
+const authJwt = (req:Request,res:Response,next:NextFunction) => {
     const authheader = req.headers.authorization
     if(authheader) {
         const token = authheader.split(' ')[1]
@@ -9,7 +10,13 @@ const authJwt = (req,res,next) => {
             if(err) {
                 return res.sendStatus(403)
             }
-            req.user = user
+            if(!user){
+                return res.sendStatus(403)
+            }
+            if(typeof user === 'string'){
+                return res.sendStatus(403)
+            }
+            req.headers['user'] = user.username
             next()
         })
     } else {

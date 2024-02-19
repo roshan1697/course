@@ -7,7 +7,7 @@ import authJwt from "../middleware/jsonwt.js"
 const router = express.Router()
 
 router.get('/me',authJwt ,async(req,res)=>{
-    const user = await User.findOne({username:req.user.username})
+    const user = await User.findOne({username:req.headers['user']})
         if(user){
 
             res.json({
@@ -51,7 +51,7 @@ router.get('/courses' ,async(req,res)=>{
 router.post('/courses/:courseId', authJwt,async(req,res)=>{
     const course = await Course.findById(req.params.courseId)
     if (course) {
-        const user = await User.findOne({ username: req.user.username})
+        const user = await User.findOne({ username:req.headers['user']})
         if (user) {
             user.purchasedCourses.push(course)
             await user.save()
@@ -71,7 +71,7 @@ router.get('/courses/course/:courseId', authJwt , async (req,res) => {
     }
 })
 router.get('/purchasedcourses', authJwt,async(req,res)=>{
-    const user = await User.findOne({username: req.user.username}).populate('purchasedCourses')
+    const user = await User.findOne({username: req.headers['user']}).populate('purchasedCourses')
     if (user) {
         res.json({purchasedCourses: user.purchasedCourses || []})
     }
