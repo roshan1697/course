@@ -13,7 +13,13 @@ const authJwt = (req, res, next) => {
             if (err) {
                 return res.sendStatus(403);
             }
-            req.user = user;
+            if (!user) {
+                return res.sendStatus(403);
+            }
+            if (typeof user === 'string') {
+                return res.sendStatus(403);
+            }
+            req.headers['user'] = user.username;
             next();
         });
     }

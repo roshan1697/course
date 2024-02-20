@@ -19,7 +19,7 @@ const config_js_1 = require("../config.js");
 const jsonwt_js_1 = __importDefault(require("../middleware/jsonwt.js"));
 const router = express_1.default.Router();
 router.get('/me', jsonwt_js_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const admin = yield coursemodal_js_1.Admin.findOne({ username: req.user.username });
+    const admin = yield coursemodal_js_1.Admin.findOne({ username: req.headers['user'] });
     if (admin) {
         res.json({
             username: admin.username,

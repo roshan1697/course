@@ -5,19 +5,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = exports.Admin = exports.Course = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
-const courseSchema = mongoose_1.default.Schema({
+const courseSchema = new mongoose_1.default.Schema({
     title: String,
     description: String,
     price: Number,
     imagelink: String,
     published: Boolean
 });
-const adminSchema = mongoose_1.default.Schema({
+const adminSchema = new mongoose_1.default.Schema({
     username: String,
     password: String,
     role: String
 });
-const userSchema = mongoose_1.default.Schema({
+const userSchema = new mongoose_1.default.Schema({
     username: String,
     password: String,
     role: String,

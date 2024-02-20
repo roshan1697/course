@@ -19,7 +19,7 @@ const config_js_1 = require("../config.js");
 const jsonwt_js_1 = __importDefault(require("../middleware/jsonwt.js"));
 const router = express_1.default.Router();
 router.get('/me', jsonwt_js_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield coursemodal_js_1.User.findOne({ username: req.user.username });
+    const user = yield coursemodal_js_1.User.findOne({ username: req.headers['user'] });
     if (user) {
         res.json({
             username: user.username,
@@ -55,7 +55,7 @@ router.get('/courses', (req, res) => __awaiter(void 0, void 0, void 0, function*
 router.post('/courses/:courseId', jsonwt_js_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const course = yield coursemodal_js_1.Course.findById(req.params.courseId);
     if (course) {
-        const user = yield coursemodal_js_1.User.findOne({ username: req.user.username });
+        const user = yield coursemodal_js_1.User.findOne({ username: req.headers['user'] });
         if (user) {
             user.purchasedCourses.push(course);
             yield user.save();
@@ -75,7 +75,7 @@ router.get('/courses/course/:courseId', jsonwt_js_1.default, (req, res) => __awa
     }
 }));
 router.get('/purchasedcourses', jsonwt_js_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield coursemodal_js_1.User.findOne({ username: req.user.username }).populate('purchasedCourses');
+    const user = yield coursemodal_js_1.User.findOne({ username: req.headers['user'] }).populate('purchasedCourses');
     if (user) {
         res.json({ purchasedCourses: user.purchasedCourses || [] });
     }
