@@ -53,7 +53,7 @@ router.post('/courses/:courseId', authJwt,async(req,res)=>{
     if (course) {
         const user = await User.findOne({ username:req.headers['user']})
         if (user) {
-            user.purchasedCourses.push(course)
+            user.purchasedCourses.push(course._id)
             await user.save()
             res.json({message: 'course purchased successfully'})
         }

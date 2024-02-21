@@ -57,7 +57,7 @@ router.post('/courses/:courseId', jsonwt_js_1.default, (req, res) => __awaiter(v
     if (course) {
         const user = yield coursemodal_js_1.User.findOne({ username: req.headers['user'] });
         if (user) {
-            user.purchasedCourses.push(course);
+            user.purchasedCourses.push(course._id);
             yield user.save();
             res.json({ message: 'course purchased successfully' });
         }
